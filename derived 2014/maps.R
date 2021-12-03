@@ -1,0 +1,83 @@
+rm(list=ls(all=TRUE))
+library(ggplot2)
+library('sf')
+
+#get river shapefile and coordinates of transects
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\GIS TAN')
+river1 <- st_read("rio_tanguro_dissp.shp")
+experim.fire <- st_read("Polygon_A_B_C_D.shp")
+
+#get estimated parameters
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\results 2014')
+theta.m=read.csv('theta.m.csv',as.is=T)
+boxplot(theta.m)
+max.groups=4
+
+#what do these groups look like?
+phi.m=read.csv('phi.m.csv',as.is=T)
+max.y=max(phi.m[1:max.groups,])
+par(mfrow=c(2,2),mar=c(3,3,1,1))
+for (i in 1:max.groups){
+  plot(unlist(phi.m[i,]),type='h',ylim=c(0,max.y))
+}
+
+#get data
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\edited data\\2014')
+dat=read.csv('y1.csv',as.is=T)
+ind=which(colnames(dat)%in%c('X','Y'))
+coord=dat[,ind]
+
+#re-order groups and combine coord with theta
+order1=c(3,2,4,1)
+theta.m1=theta.m[,order1]
+colnames(theta.m1)=paste0('gr',1:max.groups)
+theta2=cbind(coord,theta.m1)
+
+#look at spatial distribution
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\derived 2014')
+xrango=range(theta2$X)
+yrango=range(theta2$Y)
+yrango[2]=8554325
+diffx=diff(xrango)
+diffy=diff(yrango)
+labels1=c('1. Near Surf.','2. Short','3. Intermed.','4. Tall')
+for (j in 1:max.groups){
+  nomes=paste0('gr',j)
+  theta2$response=theta2[,nomes]
+  minx=xrango[1]
+  maxy=yrango[2]
+  res=ggplot() +
+    geom_tile(data = theta2, alpha = 0.8,aes(x = X, y = Y,fill = response)) +
+    scale_fill_gradient2(low = "cyan", mid = "red",high='purple',limits=c(0,1),midpoint=0.5) +
+    guides(fill='none') +
+    annotate("text",x=minx,y=maxy-0.15*diffy,label=labels1[j],
+             size=8,hjust = 0) +
+    annotate("text",x=mean(xrango),y=maxy,label='Agricult. field',
+             size=5,col='brown',fontface=3) +
+    theme(axis.title.x=element_blank(),
+          axis.title.y=element_blank(),
+          axis.text.x=element_text(size=12),
+          axis.text.y=element_text(size=12),
+          axis.text=element_text(size=16),
+          plot.title = element_text(size=30,hjust = 0.5),
+          plot.margin=grid::unit(c(0,0,0,0), "mm"))+
+    geom_sf(data=river1,colour='darkblue') +
+    geom_sf(data=experim.fire,colour='black',fill=NA) +
+    xlim(xrango) +
+    ylim(c(8552220,yrango[2])) +
+    annotate("text", x = 350500, y = 8552950, label = "C",size=9) +
+    annotate("text", x = 350000, y = 8552950, label = "3x",size=9) +
+    annotate("text", x = 349500, y = 8552950, label = "6x",size=9) +
+    annotate("text", x = 348500, y = 8552950, label = "1x",size=9) +
+    scale_size_identity() 
+  
+    ggsave(file=paste('maps',j,'.jpeg',sep=''), res,width=7,height=(diffy/diffx)*7)
+}
+
+#--------------------------
+#plot legend
+res=ggplot() +
+  geom_tile(data = theta2, alpha = 0.8,aes(x = X, y = Y,fill = response)) +
+  scale_fill_gradient2(low = "cyan", mid = "red",high='purple',limits=c(0,1),midpoint=0.5) +
+  theme(legend.title = element_blank())
+ggsave(file='maps legend.jpeg', res,width=7,height=(diffy/diffx)*7)

@@ -1,0 +1,51 @@
+rm(list=ls(all=TRUE))
+# library('devtools')
+# devtools::install_github('drvalle1/LidarLDA',build_vignettes = F)
+library('LidarLDA')
+set.seed(59)
+
+#get data
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simul\\fake data')
+ncomm.dat=3
+nome=paste0('fake data y',ncomm.dat,'.csv')
+dat=read.csv(nome,as.is=T)
+y=data.matrix(dat)
+
+nome=paste0('fake data n',ncomm.dat,'.csv')
+dat=read.csv(nome,as.is=T)
+n=data.matrix(dat)
+
+#useful stuff
+ncomm=10
+ngibbs=20000
+nburn=ngibbs/2
+
+#priors
+a.phi=1
+b.phi=1
+gamma=0.1
+
+#run gibbs
+mod=LidarLDA(y=y,n=n,nclust=ncomm,a.phi=a.phi,b.phi=b.phi,
+             gamma=gamma,ngibbs=ngibbs,nburn=nburn,theta.post=T,phi.post=T)
+
+#look at convergence
+plot(mod$llk,type='l')
+seq1=10000:ngibbs 
+plot(mod$llk[seq1],type='l')
+
+#get summary of parameters
+nloc=nrow(y); nspp=ncol(y)
+tmp=apply(mod$theta,2,mean)
+theta.estim=matrix(tmp,nloc,ncomm)
+boxplot(theta.estim)
+
+tmp=apply(mod$phi,2,mean)
+phi.estim=matrix(tmp,ncomm,nspp)
+
+#export summaries
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simul\\results')
+nomes=paste0(c('theta','phi','llk'),ncomm.dat,'.csv')
+write.csv(theta.estim,nomes[1],row.names=F)
+write.csv(phi.estim,nomes[2],row.names=F)
+write.csv(mod$llk,nomes[3],row.names=F)
