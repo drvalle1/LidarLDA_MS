@@ -1,17 +1,18 @@
 rm(list=ls(all=TRUE))
-library('gstat')
-library('sp')
+library('gstat')  #gstat_2.0-7
+library('sp')     #sp_1.4-5
 
-#get data
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\edited data\\2018')
-dat=read.csv('y1.csv',as.is=T)
+#root path
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS')
+
+#get coordinates
+dat=read.csv('edited data\\2018\\y1.csv',as.is=T)
 ind=which(colnames(dat)%in%c('X','Y'))
 coord=dat[,ind]
 nloc.2018=nrow(coord)
 
 #get theta
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\results 2018')
-theta.m=read.csv('theta.m.csv',as.is=T)
+theta.m=read.csv('results 2018\\theta.m.csv',as.is=T)
 order1=c(3,2,4,1)
 theta.m=theta.m[,order1]
 boxplot(theta.m)
@@ -21,8 +22,7 @@ colnames(theta.m)=nomes
 theta.m1=cbind(coord,theta.m)
 
 #get coordinates from 2014
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\edited data\\2014')
-dat=read.csv('y1.csv',as.is=T)
+dat=read.csv('edited data\\2014\\y1.csv',as.is=T)
 ind=which(colnames(dat)%in%c('X','Y'))
 coord.complete=dat[,ind]
 coordinates(coord.complete)=c('X','Y')
@@ -56,5 +56,4 @@ for (i in 1:ncomm){
 }
 
 #export results
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\derived 2018')
-write.csv(res1,'theta_m_interp.csv',row.names=F)
+write.csv(res1,'derived 2018\\theta_m_interp.csv',row.names=F)

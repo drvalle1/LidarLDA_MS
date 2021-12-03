@@ -1,10 +1,10 @@
 rm(list=ls(all=TRUE))
 
+#root path
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS')
+
 #get 2014 data
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simplex')
-a2014=read.csv('data 2014.csv')
-# soma=apply(a2014[,paste0('comm',1:4)],1,sum)
-# hist(soma)
+a2014=read.csv('simplex\\data 2014.csv')
 
 #edit these data
 a2014$comm34=a2014$comm3+a2014$comm4
@@ -19,7 +19,7 @@ a2014a$comm34.14=a2014a$comm34.14+(1-soma)
 apply(a2014a[,c('comm1.14','comm2.14','comm34.14')],1,sum)
 
 #get 2018 data
-a2018=read.csv('data 2018.csv')
+a2018=read.csv('simplex\\data 2018.csv')
 
 #edit these data
 a2018$comm34=a2018$comm3+a2018$comm4
@@ -49,7 +49,7 @@ tmp3=data.frame(comm1=0   ,comm2=seq1,  comm34=1-seq1)
 ticks=rbind(tmp1,tmp2,tmp3)
 
 #plot results
-png('graph1_2_34.png',width=500,height=1000)
+png('simplex\\graph1_2_34.png',width=500,height=1000)
 par(mfrow=c(2,1),mar=c(1,1,4,1))
 tipo=c('edge','interior')
 titulo=paste0('Forest ',tipo)

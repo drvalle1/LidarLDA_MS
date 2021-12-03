@@ -4,13 +4,15 @@ rm(list=ls(all=TRUE))
 library('LidarLDA')
 set.seed(59)
 
+#root folder
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS')
+
 #get data
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\edited data\\2014')
-dat=read.csv('y1.csv',as.is=T)
+dat=read.csv('edited data\\2014\\y1.csv',as.is=T)
 ind=which(colnames(dat)%in%c('X','Y'))
 y=data.matrix(dat[,-ind])
 
-dat=read.csv('n1.csv',as.is=T)
+dat=read.csv('edited data\\2014\\n1.csv',as.is=T)
 ind=which(colnames(dat)%in%c('X','Y'))
 n=data.matrix(dat[,-ind])
 
@@ -36,9 +38,8 @@ tmp=lowess(mod$llk[seq1])
 lines(tmp$x,tmp$y,col='red')
 
 #export summaries
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\results 2014')
-write.csv(mod$theta,'theta.m.csv',row.names=F)
-write.csv(mod$phi,'phi.m.csv',row.names=F)
+write.csv(mod$theta,'results 2014\\theta.m.csv',row.names=F)
+write.csv(mod$phi,'results 2014\\phi.m.csv',row.names=F)
 
 #export posterior
-write.csv(mod$llk,'llk.csv',row.names=F)
+write.csv(mod$llk,'results 2014\\llk.csv',row.names=F)

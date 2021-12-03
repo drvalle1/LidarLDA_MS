@@ -1,8 +1,10 @@
 rm(list=ls(all=TRUE))
 
-#get coordinates for each treatment
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simplex')
-coord=read.csv('coord select.csv')
+#root path
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS')
+
+#get coordinates of transect for each treatment
+coord=read.csv('simplex\\coord select.csv')
 coord1=aggregate(X~fire.treat,data=coord,mean)
 coord1$X=floor(coord1$X)
 cond=coord1$fire.treat=='C'
@@ -18,5 +20,4 @@ maxy=max(coord2$Y)
 coord2$d.edge=abs(coord2$Y-maxy)
 
 #output results
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\CHM')
-write.csv(coord2,'CHM transects.csv',row.names=F)
+write.csv(coord2,'CHM\\CHM transects.csv',row.names=F)

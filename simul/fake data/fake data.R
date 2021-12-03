@@ -1,10 +1,12 @@
 rm(list=ls(all=TRUE))
 set.seed(421)
 
+#root path
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS')
+
 #get theta and phi
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simul\\fake data')
-ncomm=3
-nome=paste0(c('phi','theta'),ncomm,'.csv')
+ncomm=5
+nome=paste0('simul\\fake data\\',c('phi','theta'),ncomm,'.csv')
 phi=read.csv(nome[1])
 theta=read.csv(nome[2])
 nloc=nrow(theta)
@@ -44,8 +46,7 @@ unique(n2-teste)
 colnames(y)=paste('spp',1:nspp,sep='')
 
 #export results
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simul\\fake data')
-nome=paste('fake data y',ncomm,'.csv',sep='')    
+nome=paste('simul\\fake data\\fake data y',ncomm,'.csv',sep='')    
 write.csv(y,nome,row.names=F)    
-nome=paste('fake data n',ncomm,'.csv',sep='')    
+nome=paste('simul\\fake data\\fake data n',ncomm,'.csv',sep='')    
 write.csv(n2,nome,row.names=F)    

@@ -1,14 +1,16 @@
 rm(list=ls(all=TRUE))
 
+#root path
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS')
+
 #get colors right
 cores=col2rgb(c('green','red','cyan','orange',
                 rep('grey',6)))/255
 cores1=rgb(cores[1,],cores[2,],cores[3,],alpha=1,maxColorValue=1)
 cores2=cores1[1:4]
 
-#get average parameter estimates
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\comparison field')
-theta=read.csv('theta average.csv')
+#get average theta estimates for each transect x treatment 
+theta=read.csv('comparison field\\theta average.csv')
 
 #useful stuff
 uni.edge=sort(unique(theta$d.edge))
@@ -22,7 +24,7 @@ uni.treat=unique(theta$fire.treat)
 nuni.treat=length(uni.treat)
 clusters=paste0('gr',1:4)
 for (j in 1:nuni.treat){
-  nome=paste0('theta distrib ',uni.treat[j],'.png')
+  nome=paste0('comparison field\\theta distrib ',uni.treat[j],'.png')
   png(nome,width=700,height=1000)
   par(mfrow=c(nuni.edge,1),mar=c(3,3,3,1),oma=c(5,6,1,1))
   for(i in 1:nuni.edge){

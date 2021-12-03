@@ -1,8 +1,10 @@
 rm(list=ls(all=TRUE))
 
+#root path
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS')
+
 #get tree data
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\comparison field')
-tree=read.csv('field data.csv')
+tree=read.csv('comparison field\\field data.csv')
 
 #some minor modifications
 cond=tree$treat=='C'; tree$treat[cond]='Control'
@@ -19,7 +21,7 @@ max.ntree=max(tree[,ind])
 uni.treat=unique(tree$treat)
 nuni.treat=length(uni.treat)
 for (j in 1:nuni.treat){
-  nome=paste0('diameter distrib ',uni.treat[j],'.png')
+  nome=paste0('comparison field\\diameter distrib ',uni.treat[j],'.png')
   png(nome,width=700,height=1000)
   par(mfrow=c(nuni.edge,1),mar=c(3,3,3,1),oma=c(5,6,1,1))
   for(i in 1:nuni.edge){

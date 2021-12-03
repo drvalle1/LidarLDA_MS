@@ -1,11 +1,13 @@
 rm(list=ls(all=TRUE))
 
-#get estimated parameters
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\results 2014')
-theta=read.csv('theta.m.csv')
-phi=read.csv('phi.m.csv')
+#root path
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS')
 
-#plot each group
+#get estimated parameters
+theta=read.csv('results 2014\\theta.m.csv')
+phi=read.csv('results 2014\\phi.m.csv')
+
+#re-order clusters
 order1=c(3,2,4,1)
 phi1=phi[order1,]
 range(phi1)
@@ -17,8 +19,7 @@ cores=c('green','red','cyan','orange')
 tipos=c('1. Near surface','2. Short','3. Intermediate','4. Tall')
 
 #plot phi
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\derived 2014')
-png('phi ordered.png',width=700,height=1000)
+png('derived 2014\\phi ordered.png',width=700,height=1000)
 par(mfrow=c(4,1),mar=c(3,3,4,1),oma=c(3,5,0,0))
 for (i in 1:ngroup){
   plot(1:ncol(phi1),as.numeric(phi1[i,]),type='h',main='',

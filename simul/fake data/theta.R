@@ -1,5 +1,8 @@
 rm(list=ls())
-library(ggplot2)
+library(ggplot2)  #ggplot2_3.3.3
+
+#root path
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS')
 
 #coordinates
 x=seq(from=-50,to=50,by=2)
@@ -44,8 +47,7 @@ ggplot(data=combo,aes(x=x,y=y)) +
   geom_contour(aes(x=combo$x, y=combo$y, z = combo$topo))
 
 #export true parameters
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simul\\fake data')
-write.csv(combo,'theta3.csv',row.names=F)
+write.csv(combo,'simul\\fake data\\theta3.csv',row.names=F)
 #----------------------------------------------
 #create 5 communities
 range(combo$topo)
@@ -77,6 +79,5 @@ ggplot(data=combo,aes(x=x,y=y)) +
   geom_contour(aes(x=combo$x, y=combo$y, z = combo$topo))
 
 #export true parameters
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simul\\fake data')
-write.csv(combo,'theta5.csv',row.names=F)
+write.csv(combo,'simul\\fake data\\theta5.csv',row.names=F)
 

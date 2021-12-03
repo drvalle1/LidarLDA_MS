@@ -1,13 +1,16 @@
 rm(list=ls(all=TRUE))
 library(ggplot2)
 
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simul\\fake data')
-combo3=read.csv('theta3.csv')
-combo5=read.csv('theta5.csv')
+#root path
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS')
 
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simul\\derived')
-theta3=read.csv('cluster analysis 3.csv'); 
-theta5=read.csv('cluster analysis 5.csv'); 
+#get true parameter values
+combo3=read.csv('simul\\fake data\\theta3.csv')
+combo5=read.csv('simul\\fake data\\theta5.csv')
+
+#get estimated values based on hard clustering
+theta3=read.csv('simul\\derived\\cluster analysis 3.csv'); 
+theta5=read.csv('simul\\derived\\cluster analysis 5.csv'); 
 
 #do we get the same results?
 mean(theta3$hclust1!=theta3$agnes5) #no
@@ -56,8 +59,7 @@ res5.leg=ggplot(data=theta5b,aes(x=x,y=y,fill=Cluster)) +
   scale_fill_manual(values=colors) +
   xlab('')+ylab('')
 
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simul\\derived')
-ggsave(file=paste('map estim',3,' XCluster.jpeg',sep=''), res3,width=7,height=7)
-ggsave(file=paste('map estim',5,' XCluster.jpeg',sep=''), res5,width=7,height=7)  
-ggsave(file=paste('map estim',3,' XCluster leg.jpeg',sep=''), res3.leg,width=7,height=7)
-ggsave(file=paste('map estim',5,' XCluster leg.jpeg',sep=''), res5.leg,width=7,height=7)  
+ggsave(file='simul\\derived\\map estim3 XCluster.jpeg', res3,width=7,height=7)
+ggsave(file='simul\\derived\\map estim5 XCluster.jpeg', res5,width=7,height=7)  
+ggsave(file='simul\\derived\\map estim3 XCluster leg.jpeg', res3.leg,width=7,height=7)
+ggsave(file='simul\\derived\\map estim5 XCluster leg.jpeg', res5.leg,width=7,height=7)  

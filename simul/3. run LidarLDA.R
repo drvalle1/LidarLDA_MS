@@ -4,14 +4,16 @@ rm(list=ls(all=TRUE))
 library('LidarLDA')
 set.seed(59)
 
+#root path
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS')
+
 #get data
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simul\\fake data')
 ncomm.dat=3
-nome=paste0('fake data y',ncomm.dat,'.csv')
+nome=paste0('simul\\fake data\\fake data y',ncomm.dat,'.csv')
 dat=read.csv(nome,as.is=T)
 y=data.matrix(dat)
 
-nome=paste0('fake data n',ncomm.dat,'.csv')
+nome=paste0('simul\\fake data\\fake data n',ncomm.dat,'.csv')
 dat=read.csv(nome,as.is=T)
 n=data.matrix(dat)
 
@@ -44,8 +46,7 @@ tmp=apply(mod$phi,2,mean)
 phi.estim=matrix(tmp,ncomm,nspp)
 
 #export summaries
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simul\\results')
-nomes=paste0(c('theta','phi','llk'),ncomm.dat,'.csv')
+nomes=paste0('simul\\results\\',c('theta','phi','llk'),ncomm.dat,'.csv')
 write.csv(theta.estim,nomes[1],row.names=F)
 write.csv(phi.estim,nomes[2],row.names=F)
 write.csv(mod$llk,nomes[3],row.names=F)

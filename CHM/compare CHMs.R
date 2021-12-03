@@ -1,15 +1,16 @@
 rm(list=ls(all=TRUE))
 
+#root path
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS')
+
 #get 2014 CHM data
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\CHM\\2014 edited data')
-dat14=read.csv('TAN 2014 edited.csv')
+dat14=read.csv('CHM\\2014 edited data\\TAN 2014 edited.csv')
 cond=dat14$nobs==25000; mean(cond)
 dat14=dat14[cond,c('X','Y','q99')]
 colnames(dat14)[ncol(dat14)]='q99.14'
 
 #get 2018 CHM data
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\CHM\\2018 edited data')
-dat18=read.csv('TAN 2018 edited.csv')
+dat18=read.csv('CHM\\2018 edited data\\TAN 2018 edited.csv')
 cond=dat18$nobs==25000; mean(cond)
 dat18=dat18[cond,c('X','Y','q99')]
 colnames(dat18)[ncol(dat18)]='q99.18'
@@ -17,14 +18,13 @@ colnames(dat18)[ncol(dat18)]='q99.18'
 #combine datasets
 fim=merge(dat14,dat18,all=T); dim(dat14); dim(dat18); dim(fim)
 
-#CHM transects
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\CHM')
-CHM.transects=read.csv('CHM transects.csv')
+#get coordinates for transects
+CHM.transects=read.csv('CHM\\CHM transects.csv')
 
 #only retain data in transects
 fim1a=merge(fim,CHM.transects,all.y=T); dim(fim1a); dim(CHM.transects)
 
-#plot results together
+#create smooth curves for each transect
 trat=c('C','1x','3x','6x')
 cores=c('green','orange','red','purple')
 
@@ -47,9 +47,8 @@ for (i in 1:length(trat)){
 trat=c('C','1x','3x','6x')
 cores=c('green','orange','red','purple')
 
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\CHM')
 for (i in 1:length(trat)){
-  nome=paste('compare CHM ',trat[i],'.png')
+  nome=paste('CHM\\compare CHM ',trat[i],'.png')
   png(nome,height=500,width=700)
   par(mfrow=c(1,1),mar=c(4,4,1,1))
   plot(NA,NA,xlim=range(fim1a$d.edge),

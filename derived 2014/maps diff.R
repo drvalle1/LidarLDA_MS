@@ -1,19 +1,19 @@
 rm(list=ls(all=TRUE))
-library(ggplot2)
-library('sf')
+library(ggplot2)   #ggplot2_3.3.3
+library('sf')      #sf_0.9-8 
+
+#root path
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS')
 
 #get river shapefile and coordinates of transects
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\GIS TAN')
-river1 <- st_read("rio_tanguro_dissp.shp")
-experim.fire <- st_read("Polygon_A_B_C_D.shp")
+river1 <- st_read("GIS TAN\\rio_tanguro_dissp.shp")
+experim.fire <- st_read("GIS TAN\\Polygon_A_B_C_D.shp")
 
 #get estimated parameters
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\results 2014')
-theta.m=read.csv('theta.m.csv',as.is=T)
+theta.m=read.csv('results 2014\\theta.m.csv',as.is=T)
 
-#get data
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\edited data\\2014')
-dat=read.csv('y1.csv',as.is=T)
+#get coordinates
+dat=read.csv('edited data\\2014\\y1.csv',as.is=T)
 ind=which(colnames(dat)%in%c('X','Y'))
 coord=dat[,ind]
 
@@ -25,15 +25,13 @@ colnames(theta.m1)=paste0('gr2014.',1:max.groups)
 theta.2014=cbind(coord,theta.m1)
 
 #get 2018 parameters
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\derived 2018')
-theta.2018=read.csv('theta_m_interp.csv')
+theta.2018=read.csv('derived 2018\\theta_m_interp.csv')
 
 #merge
 fim=merge(theta.2014,theta.2018,all.x=T); dim(theta.2014); dim(fim)
 apply(is.na(fim),2,mean)
 
-#look at spatial distribution
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\derived 2014')
+#plot spatial distribution
 max.groups=4
 xrango=range(fim$X)
 yrango=range(fim$Y)
@@ -71,8 +69,7 @@ for (j in 1:max.groups){
     annotate("text", x = 349500, y = 8552950, label = "6x",size=9) +
     annotate("text", x = 348500, y = 8552950, label = "1x",size=9) +
     scale_size_identity() #+
-    #geom_hline(yintercept=8554250)
-    ggsave(file=paste('maps diff',j,'.jpeg',sep=''), res,width=7,height=(diffy/diffx)*7)
+    ggsave(file=paste('derived 2014\\maps diff',j,'.jpeg',sep=''), res,width=7,height=(diffy/diffx)*7)
 }
 
 #--------------------------
@@ -81,4 +78,4 @@ res=ggplot() +
   geom_tile(data = fim, alpha = 0.8,aes(x = X, y = Y,fill = response)) +
   scale_fill_gradient2(low = "red", mid = "white",high='blue',limits=c(-1,1),midpoint=0) +
   theme(legend.title = element_blank())
-ggsave(file='maps diff legend.jpeg', res,width=7,height=(diffy/diffx)*7)
+ggsave(file='derived 2014\\maps diff legend.jpeg', res,width=7,height=(diffy/diffx)*7)

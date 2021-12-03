@@ -1,29 +1,29 @@
 rm(list=ls(all=TRUE))
-library(ggplot2)
-library('sf')
+library(ggplot2)   #ggplot2_3.3.3
+library('sf')      #sf_0.9-8 
+
+#root path
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS')
 
 #get river shapefile and coordinates of transects
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\GIS TAN')
-river1 <- st_read("rio_tanguro_dissp.shp")
-experim.fire <- st_read("Polygon_A_B_C_D.shp")
+river1 <- st_read("GIS TAN\\rio_tanguro_dissp.shp")
+experim.fire <- st_read("GIS TAN\\Polygon_A_B_C_D.shp")
 
 #get estimated parameters
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\results 2014')
-theta.m=read.csv('theta.m.csv',as.is=T)
+theta.m=read.csv('results 2014\\theta.m.csv',as.is=T)
 boxplot(theta.m)
 max.groups=4
 
 #what do these groups look like?
-phi.m=read.csv('phi.m.csv',as.is=T)
+phi.m=read.csv('results 2014\\phi.m.csv',as.is=T)
 max.y=max(phi.m[1:max.groups,])
 par(mfrow=c(2,2),mar=c(3,3,1,1))
 for (i in 1:max.groups){
   plot(unlist(phi.m[i,]),type='h',ylim=c(0,max.y))
 }
 
-#get data
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\edited data\\2014')
-dat=read.csv('y1.csv',as.is=T)
+#get coordinates
+dat=read.csv('edited data\\2014\\y1.csv',as.is=T)
 ind=which(colnames(dat)%in%c('X','Y'))
 coord=dat[,ind]
 
@@ -33,8 +33,7 @@ theta.m1=theta.m[,order1]
 colnames(theta.m1)=paste0('gr',1:max.groups)
 theta2=cbind(coord,theta.m1)
 
-#look at spatial distribution
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\derived 2014')
+#plot spatial distribution
 xrango=range(theta2$X)
 yrango=range(theta2$Y)
 yrango[2]=8554325
@@ -71,7 +70,7 @@ for (j in 1:max.groups){
     annotate("text", x = 348500, y = 8552950, label = "1x",size=9) +
     scale_size_identity() 
   
-    ggsave(file=paste('maps',j,'.jpeg',sep=''), res,width=7,height=(diffy/diffx)*7)
+    ggsave(file=paste('derived 2014\\maps',j,'.jpeg',sep=''), res,width=7,height=(diffy/diffx)*7)
 }
 
 #--------------------------
@@ -80,4 +79,4 @@ res=ggplot() +
   geom_tile(data = theta2, alpha = 0.8,aes(x = X, y = Y,fill = response)) +
   scale_fill_gradient2(low = "cyan", mid = "red",high='purple',limits=c(0,1),midpoint=0.5) +
   theme(legend.title = element_blank())
-ggsave(file='maps legend.jpeg', res,width=7,height=(diffy/diffx)*7)
+ggsave(file='derived 2014\\maps legend.jpeg', res,width=7,height=(diffy/diffx)*7)

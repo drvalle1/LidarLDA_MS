@@ -1,16 +1,17 @@
 rm(list=ls(all=TRUE))
-library('coda')
+library('coda')  #coda_0.19-4
+
+#root path
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS')
 
 #get llk
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\results 2014')
-llk=read.csv('llk.csv')$x
+llk=read.csv('results 2014\\llk.csv')$x
 ngibbs=length(llk)
 nburn=ngibbs*0.1
 seq1=nburn:ngibbs 
 
 #plot results
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\derived 2014')
-png('convergence.png',width=1000,height=700)
+png('derived 2014\\convergence.png',width=1000,height=700)
 par(mfrow=c(1,2),mar=c(2,2,4,3),oma=c(3,3,0,0))
 plot(llk,type='l',ylab='',xlab='',main='Before removing burn-in',
      cex.main=3,cex.axis=2)

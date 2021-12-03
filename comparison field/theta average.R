@@ -1,16 +1,17 @@
 rm(list=ls(all=TRUE))
 
+#root path
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS')
+
 #get theta
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\results 2014')
-theta.m=read.csv('theta.m.csv',as.is=T)
+theta.m=read.csv('results 2014\\theta.m.csv',as.is=T)
 order1=c(3,2,4,1)
 theta.m=theta.m[,order1]
 names1=paste0('gr',1:4)
 colnames(theta.m)=names1
 
 #get coordinates
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\edited data\\2014')
-dat=read.csv('y1.csv',as.is=T)
+dat=read.csv('edited data\\2014\\y1.csv',as.is=T)
 ind=which(colnames(dat)%in%c('X','Y'))
 coord=dat[,ind]
 
@@ -18,8 +19,7 @@ coord=dat[,ind]
 theta.m1=cbind(coord,theta.m)
 
 #get distance to edge 
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\comparison field')
-dist1=read.csv('dist edge for theta.csv')
+dist1=read.csv('comparison field\\dist edge for theta.csv')
 theta.m2=merge(theta.m1,dist1,all.y=T); dim(dist1); dim(theta.m2)
 apply(is.na(theta.m2),2,sum)
 
@@ -37,4 +37,4 @@ theta.m3=aggregate(cbind(gr1,gr2,gr3,gr4)~fire.treat+Parcela+d.edge,
                    data=theta.m2,mean)
 
 #export results
-write.csv(theta.m3,'theta average.csv',row.names=F)
+write.csv(theta.m3,'comparison field\\theta average.csv',row.names=F)

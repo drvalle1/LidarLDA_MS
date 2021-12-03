@@ -1,12 +1,15 @@
 rm(list=ls())
-library(ggplot2)
+library(ggplot2)   #ggplot2_3.3.3
 
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simul\\fake data')
-combo3=read.csv('theta3.csv')
+#root path
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS')
+
+#get structure of original table
+combo3=read.csv('simul\\fake data\\theta3.csv')
 tmp=sample(1:3,size=nrow(combo3),replace=T)
 combo3$Cluster=as.factor(tmp)
 
-combo5=read.csv('theta5.csv')
+combo5=read.csv('simul\\fake data\\theta5.csv')
 tmp=sample(1:5,size=nrow(combo5),replace=T)
 combo5$Cluster=as.factor(tmp)
 
@@ -24,6 +27,5 @@ res5=ggplot(data=combo5,aes(x=x,y=y,fill=Cluster))+
 res5
 
 #export results
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simul\\derived')
-ggsave(file=paste('map true',3,'legend.jpeg',sep=''), res3,width=7,height=7)
-ggsave(file=paste('map true',5,'legend.jpeg',sep=''), res5,width=7,height=7)
+ggsave(file='simul\\derived\\map true3legend.jpeg', res3,width=7,height=7)
+ggsave(file='simul\\derived\\map true5legend.jpeg', res5,width=7,height=7)

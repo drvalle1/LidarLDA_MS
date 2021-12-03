@@ -1,14 +1,17 @@
 rm(list=ls(all=TRUE))
 
-#get data
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simul\\fake data')
-phi.t3=read.csv('phi3.csv')
-phi.t5=read.csv('phi5.csv')
+#root path
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS')
 
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simul\\results')
-phi.e3=read.csv('phi3.csv')[1:3,]; 
-phi.e5=read.csv('phi5.csv')[1:5,]; 
+#get true parameter values
+phi.t3=read.csv('simul\\fake data\\phi3.csv')
+phi.t5=read.csv('simul\\fake data\\phi5.csv')
 
+#get estimated parameter values
+phi.e3=read.csv('simul\\results\\phi3.csv')[1:3,]; 
+phi.e5=read.csv('simul\\results\\phi5.csv')[1:5,]; 
+
+#re-order clusters
 seq1=c(2,1,3,5,4)
 phi.e5=phi.e5[seq1,]
 
@@ -16,8 +19,7 @@ phi.e5=phi.e5[seq1,]
 cores3=c('green','red','cyan')
 rango=range(c(phi.t3,phi.e3))
 
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simul\\derived')
-png('scatterplot phi3.png',width=700,height=700)
+png('simul\\derived\\scatterplot phi3.png',width=700,height=700)
 par(mfrow=c(1,1),mar=c(4,6,1,1))
 plot(NA,NA,ylim=rango,xlim=rango,xlab='True',ylab='Estimated',
      cex.lab=3,cex.axis=2.5,cex=2,pch=19,
@@ -37,8 +39,7 @@ dev.off()
 cores5=c('green','red','cyan','orange','blue')
 rango=range(c(phi.e5,phi.t5))
 
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simul\\derived')
-png('scatterplot phi5.png',width=700,height=700)
+png('simul\\derived\\scatterplot phi5.png',width=700,height=700)
 par(mfrow=c(1,1),mar=c(4,6,1,1))
 plot(NA,NA,ylim=rango,xlim=rango,xlab='True',ylab='Estimated',
      cex.lab=3,cex.axis=2.5,cex=2,pch=19,

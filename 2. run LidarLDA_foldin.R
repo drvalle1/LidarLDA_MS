@@ -4,13 +4,15 @@ rm(list=ls(all=TRUE))
 library('LidarLDA')
 set.seed(59)
 
+#root path
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS')
+
 #get data
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\edited data\\2018')
-dat=read.csv('y1.csv',as.is=T)
+dat=read.csv('edited data\\2018\\y1.csv',as.is=T)
 ind=which(colnames(dat)%in%c('X','Y'))
 y=data.matrix(dat[,-ind])
 
-dat=read.csv('n1.csv',as.is=T)
+dat=read.csv('edited data\\2018\\n1.csv',as.is=T)
 ind=which(colnames(dat)%in%c('X','Y'))
 coord8=dat[,ind]
 n=data.matrix(dat[,-ind])
@@ -44,6 +46,5 @@ theta.estim=matrix(tmp,nloc,ncomm)
 boxplot(theta.estim)
 
 #export results
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\results 2018')
-write.csv(theta.estim,'theta.m.csv',row.names=F)
-write.csv(mod$llk,'llk.csv',row.names=F)
+write.csv(theta.estim,'results 2018\\theta.m.csv',row.names=F)
+write.csv(mod$llk,'results 2018\\llk.csv',row.names=F)

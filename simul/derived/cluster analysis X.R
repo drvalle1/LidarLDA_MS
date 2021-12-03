@@ -1,16 +1,18 @@
 rm(list=ls(all=TRUE))
-library('cluster')
-library('maptree')
-library(factoextra)
+library('cluster')    #cluster_2.1.2
+library('maptree')    #maptree_1.4-7
+library(factoextra)   #factoextra_1.0.7
+
+#root path
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS')
 
 #get data
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simul\\fake data')
-ncomm.dat=3
-nome=paste0('fake data y',ncomm.dat,'.csv')
+ncomm.dat=5
+nome=paste0('simul\\fake data\\fake data y',ncomm.dat,'.csv')
 dat=read.csv(nome,as.is=T)
 y=data.matrix(dat)
 
-nome=paste0('fake data n',ncomm.dat,'.csv')
+nome=paste0('simul\\fake data\\fake data n',ncomm.dat,'.csv')
 dat=read.csv(nome,as.is=T)
 n=data.matrix(dat)
 
@@ -35,6 +37,5 @@ names(b)[ind]
 dat$agnes5 <- cutree(a, k = 5) #optimal
 # dat$agnes5 <- cutree(a, k = 5) #optimal
 
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simul\\derived')
-nome=paste0('cluster analysis ',ncomm.dat,'.csv')
+nome=paste0('simul\\derived\\cluster analysis ',ncomm.dat,'.csv')
 write.csv(dat[,c('hclust1','agnes5')],nome,row.names=F)

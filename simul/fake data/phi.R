@@ -1,5 +1,8 @@
 rm(list=ls())
 
+#root path
+setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS')
+
 #3 communities
 ncomm=3
 height=1:30
@@ -18,8 +21,7 @@ par(mfrow=c(3,1),mar=rep(1,4))
 for (i in 1:ncomm) plot(phi[i,],type='h')
 
 #export true parameters
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simul\\fake data')
-write.csv(phi,'phi3.csv',row.names=F)
+write.csv(phi,'simul\\fake data\\phi3.csv',row.names=F)
 #------------------------------------------------
 #5 communities
 
@@ -42,5 +44,4 @@ par(mfrow=c(5,1),mar=rep(1,4))
 for (i in 1:ncomm) plot(phi[i,],type='h')
 
 #export true parameters
-setwd('U:\\independent studies\\LIDAR Tanguro\\LidarLDA_MS\\simul\\fake data')
-write.csv(phi,'phi5.csv',row.names=F)
+write.csv(phi,'simul\\fake data\\phi5.csv',row.names=F)
