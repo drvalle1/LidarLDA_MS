@@ -20,7 +20,8 @@ n=data.matrix(dat)
 #useful stuff
 ncomm=10
 ngibbs=20000
-nburn=ngibbs/2
+nburn=ngibbs*0.3 #for 3 clusters
+# nburn=ngibbs*0.7 for 5 clusters
 
 #priors
 a.phi=1
@@ -33,7 +34,7 @@ mod=LidarLDA(y=y,n=n,nclust=ncomm,a.phi=a.phi,b.phi=b.phi,
 
 #look at convergence
 plot(mod$llk,type='l')
-seq1=10000:ngibbs 
+seq1=nburn:ngibbs 
 plot(mod$llk[seq1],type='l')
 
 #get summary of parameters
